@@ -25,7 +25,7 @@ const ChatBox = () => {
     <>
       {isChatBoxOpen ? (
         <div
-          data-aos="fade-left"
+          data-aos="fade-up"
           className="absolute border border-border w-full h-full md:p-10 z-20 backdrop-blur"
         >
           <div className="w-full md:max-w-[1200px] h-full md:border-2 border-primary mx-auto rounded-lg bg-foreground p-4">

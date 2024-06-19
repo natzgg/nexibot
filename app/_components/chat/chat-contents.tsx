@@ -17,9 +17,13 @@ const ChatContents = ({ chatContents }: { chatContents: string[] }) => {
     <div className="h-full w-full space-y-5 overflow-y-auto bg-white rounded-lg">
       {chatContents.map((chat, i) => (
         <>
-          <ChatBubble key={`message_${i}`} sender="User" message={chat} />
           <ChatBubble
-            key={`message_${i}`}
+            key={`message_${Math.random()}`}
+            sender="User"
+            message={chat}
+          />
+          <ChatBubble
+            key={`message_${Math.random()}`}
             sender="Bot"
             message="This is an answer to that."
           />
