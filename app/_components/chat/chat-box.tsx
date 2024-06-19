@@ -12,13 +12,15 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import ChatContents from "./chat-contents";
 
+AOS.init({
+  duration: 500,
+});
+
 const ChatBox = () => {
   const { isChatBoxOpen, toggleChatBox, chatContent } = useChat();
 
   useEffect(() => {
-    AOS.init({
-      duration: 500,
-    });
+    AOS.refresh();
   }, [isChatBoxOpen, toggleChatBox]);
 
   return (

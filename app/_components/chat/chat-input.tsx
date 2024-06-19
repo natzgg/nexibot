@@ -1,14 +1,14 @@
 "use client";
 
 import { useChat } from "@/components/ChatProvider";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 const ChatInput = () => {
   const { setMessage, sendMessage, message } = useChat();
   const [input, setInput] = useState("");
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendMessage();
   };
