@@ -12,7 +12,7 @@ const ChatBubble = ({
 }) => {
   return (
     <div className="w-full">
-      {sender === "User" ? (
+      {sender !== "User" ? (
         <div className="flex gap-2 p-2">
           <GiRobotAntennas className="w-12 h-12 fill-primary" />
           <div className="flex w-[80%] md:w-1/2">

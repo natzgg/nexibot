@@ -10,9 +10,10 @@ import AOS from "aos";
 
 // import aos styles
 import "aos/dist/aos.css";
+import ChatContents from "./chat-contents";
 
 const ChatBox = () => {
-  const { isChatBoxOpen, toggleChatBox } = useChat();
+  const { isChatBoxOpen, toggleChatBox, chatContent } = useChat();
 
   useEffect(() => {
     AOS.init({
@@ -42,23 +43,7 @@ const ChatBox = () => {
                 </button>
               </div>
               {/* CHAT CONTENTS */}
-              <div className="h-full w-full space-y-5 overflow-y-scroll bg-white rounded-lg">
-                <ChatBubble
-                  sender="User"
-                  message="This is a long message. Just random things throwing at you.This is a long message. Just random things throwing at you.This is a long message. Just random things throwing at you."
-                />
-                <ChatBubble
-                  sender="Bot"
-                  message="This is a long message. This is a long message.
-              This is a long message.
-              This is a long message.
-              This is a long message.
-              This is a long message.
-              This is a long message.
-              This is a long message. Just random things throwing at you.This is a long message. Just random things throwing at you.This is a long message. Just random things throwing at you."
-                />
-              </div>
-
+              <ChatContents chatContents={chatContent} />
               {/* TEXT AREA */}
               <ChatInput />
             </div>
