@@ -12,15 +12,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import ChatContents from "./chat-contents";
 
-AOS.init({
-  duration: 500,
-});
-
 const ChatBox = () => {
   const { isChatBoxOpen, toggleChatBox, chatContent } = useChat();
 
   useEffect(() => {
-    AOS.refresh();
+    AOS.init({
+      duration: 500,
+    });
   }, [isChatBoxOpen, toggleChatBox]);
 
   return (
@@ -28,7 +26,7 @@ const ChatBox = () => {
       {isChatBoxOpen ? (
         <div
           data-aos="fade-up"
-          className="absolute border border-border w-full h-full md:p-10 z-20 backdrop-blur"
+          className="absolute border border-border w-full h-full md:p-10 z-20 backdrop-blur overscroll-none"
         >
           <div className="w-full md:max-w-[1200px] h-full md:border-2 border-primary mx-auto rounded-lg bg-foreground p-4">
             <div className="flex flex-col h-full gap-4">
