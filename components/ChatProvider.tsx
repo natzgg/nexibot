@@ -28,7 +28,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   const toggleChatBox = () => {
     setIsChatBoxOpen(!isChatBoxOpen);
-    console.log(isChatBoxOpen);
   };
 
   const sendMessage = async () => {

@@ -9,8 +9,7 @@ export const parseOpenAIResponse = (response: string) => {
   const words = response.split("0:").filter(Boolean);
   // Remove double quotes from each word
   const cleanWords = words.map((word) => word.replace(/"/g, "").trim());
-  console.log(words);
-  console.log(cleanWords);
+
   // Join the clean words to form a sentence
   const sentence = cleanWords.join(" ").replace(/\s+([!?,.:;'"])/g, "$1");
   return sentence.trim(); // Remove any leading or trailing whitespace
@@ -18,7 +17,7 @@ export const parseOpenAIResponse = (response: string) => {
 
 const ChatContents = ({ chatContents }: { chatContents: Message[] }) => {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
-  const { openAIResponse, message } = useChat();
+  const { openAIResponse } = useChat();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,9 +28,8 @@ const ChatContents = ({ chatContents }: { chatContents: Message[] }) => {
     : "";
 
   useEffect(() => {
-    console.log(chatContents);
     scrollToBottom();
-  }, [chatContents, parsedResponse]);
+  }, [chatContents, openAIResponse]);
   return (
     <div className="h-full w-full space-y-5 overflow-y-auto bg-white rounded-lg">
       {chatContents.map((chat, i) => (
