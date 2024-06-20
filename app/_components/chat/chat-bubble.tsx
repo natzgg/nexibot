@@ -18,7 +18,8 @@ const ChatBubble = ({
           <GiRobotAntennas className="w-12 h-12 fill-primary" />
           <div className="flex w-[80%] md:w-1/2">
             <p className="flex items-center text-pretty text-sm rounded-lg p-2 w-max bg-primary/60 text-foreground">
-              <TypingAnimation text={message} />
+              {/* <TypingAnimation text={message} /> */}
+              {message}
             </p>
           </div>
         </div>

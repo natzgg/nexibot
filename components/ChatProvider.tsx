@@ -1,6 +1,6 @@
 "use client";
 
-import { parseOpenAIResponse } from "@/app/_components/chat/chat-contents";
+import { parseOpenAIResponse } from "@/libs/utils";
 import { createContext, useState, useContext, useEffect } from "react";
 
 export interface Message {
@@ -15,7 +15,7 @@ interface ChatContextType {
   setMessage: (message: string) => void;
   chatContent: Message[];
   sendMessage: () => void;
-  openAIResponse: string;
+  currentBotResponse: string;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -24,7 +24,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [isChatBoxOpen, setIsChatBoxOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [chatContent, setChatContent] = useState<Message[]>([]);
-  const [openAIResponse, setOpenAIResponse] = useState<string>("");
+  const [currentBotResponse, setCurrentBotResponse] = useState<string>("");
 
   const toggleChatBox = () => {
     setIsChatBoxOpen(!isChatBoxOpen);
@@ -42,11 +42,13 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: message }),
+        body: JSON.stringify({ message }),
       });
 
       const reader = response.body?.getReader();
       let receivedString = "";
+
+      setCurrentBotResponse(""); // Clear any previous bot response
 
       while (true) {
         //@ts-ignore
@@ -58,22 +60,22 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
         const currentString = new TextDecoder().decode(value);
         receivedString += currentString;
+        const parsedString = parseOpenAIResponse(currentString);
+
+        setCurrentBotResponse((prev) => prev + parsedString);
       }
 
-      setOpenAIResponse(parseOpenAIResponse(receivedString));
+      // Add the final bot response to the chat content
+      setChatContent((prev) => [
+        ...prev,
+        { sender: "BOT", message: parseOpenAIResponse(receivedString) },
+      ]);
+
+      setCurrentBotResponse(""); // Clear the current bot response after adding it to the chat content
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-
-  useEffect(() => {
-    if (openAIResponse) {
-      setChatContent((prev) => [
-        ...prev,
-        { sender: "BOT", message: parseOpenAIResponse(openAIResponse) },
-      ]);
-    }
-  }, [openAIResponse]);
 
   return (
     <ChatContext.Provider
@@ -84,7 +86,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         setMessage,
         chatContent,
         sendMessage,
-        openAIResponse,
+        currentBotResponse,
       }}
     >
       {children}
