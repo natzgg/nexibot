@@ -9,7 +9,7 @@ const ChatContents = ({ chatContents }: { chatContents: Message[] }) => {
   const { currentBotResponse } = useChat();
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
 
   useEffect(() => {
